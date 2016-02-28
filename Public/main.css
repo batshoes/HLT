@@ -1,0 +1,35 @@
+* {
+  font-family: 'Roboto Slab', serif
+}
+#outer {
+  width: 100vw;
+  height: 100vh;
+}
+
+#content {
+  width: 70%;
+  height: 100%;
+  padding-top: 10%;
+  margin: 0 auto;
+  text-align: center;
+  border-left: thin solid #99ff99;
+  border-right: thin solid #99ff99;
+}
+
+#result {
+  margin: 0 auto;
+  width: 70%;
+}
+
+button, input {
+  font-family: 'Roboto Slab', serif;
+  height: 2em;
+}
+
+input {
+  width: 200px;
+}
+
+button {
+  width: 75px;
+}

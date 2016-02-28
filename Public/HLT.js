@@ -13,7 +13,7 @@ function mediaId(){
   }
   var random = Math.floor(Math.random()*ids.length);
   // window.media_id = ids[random]
-  window.media_id = Math.floor(Math.random()*1000) + 1
+  window.media_id = Math.floor(Math.random()*10) + 1
 }
 
 function howLongTill(){
@@ -35,18 +35,38 @@ function getData() {
         window.runtime = json['runtime']
         window.tagline = json['tagline']
         window.title = json['title']
-        document.getElementById("id").innerHTML = media_id
-        document.getElementById("runtime").innerHTML = runtime + " mins"
-        document.getElementById("title").innerHTML = title
+        document.getElementById("id").innerHTML = "TMDb id: " + media_id
+        document.getElementById("runtime").innerHTML = "Runtime: " + runtime + " mins"
+        document.getElementById("title").innerHTML = "Title of film: " + title
         document.getElementById("time").innerHTML = "Watch " + title + " about " + Math.round(Math.round(timeTill) / runtime) + " times till christmas."
-        document.getElementById("tagline").innerHTML = tagline || json['spoken_languages'][0]['name'] || xhttp.responseText
+        document.getElementById("tagline").innerHTML = "'" + tagline + '"' || "Filmed in " + json['spoken_languages'][0]['name'] || "What the shit: " + xhttp.responseText
       } else {
         //TV Parsing
       } 
     } else if(xhttp.status == 404) {
-      console.log("something went wrong");
-      getData();
+        document.getElementById("id").innerHTML = ""
+        document.getElementById("runtime").innerHTML = ""
+        document.getElementById("title").innerHTML = ""
+        document.getElementById("time").innerHTML = ""
+        document.getElementById("tagline").innerHTML = ""
 
+      swal({   
+        title: "Congratulations!",   
+        text: "You have won an arbitrary lottery.",   
+        type: "input",
+        imageUrl: "http://weknowyourdreamz.com/images/surprise/surprise-05.jpg",   
+        showCancelButton: false,   
+        closeOnConfirm: false,   
+        animation: "slide-from-top",   
+        inputPlaceholder: "What's your name?" }, 
+      function(inputValue){   
+        if (inputValue === false) return false;      
+        if (inputValue === "") {     
+          swal.showInputError("You need to write something!");     
+          return false   }      
+          swal("Nice!", 
+            "You're a winner, " + inputValue, "success"); 
+      });
     }
   };
   xhttp.send();
