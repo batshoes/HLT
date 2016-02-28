@@ -55,7 +55,7 @@ function getData() {
         text: "You have won an arbitrary lottery.",   
         type: "input",
         imageUrl: "http://weknowyourdreamz.com/images/surprise/surprise-05.jpg",   
-        showCancelButton: false,   
+        showCancelButton: true,   
         closeOnConfirm: false,   
         animation: "slide-from-top",   
         inputPlaceholder: "What's your name?" }, 
