@@ -1,17 +1,28 @@
 <html>
   <head>
     <title>How Long Till I</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
     <script src="Public/HLT.js"></script>
     <link rel="stylesheet" href="Public/main.css">
+    <script src="./bower_components/sweetalert/dist/sweetalert.min.js"></script> 
+    <link rel="stylesheet" type="text/css" href="./bower_components/sweetalert/dist/sweetalert.css">
+
   </head>
 <body>
-  <h1>How Long Till...</h1>
-  <button type="button" onclick="getData()" >Press me</button>
-  <p id="title"></p>
-  <p id="runtime"></p>
-  <p id="tagline"></p>
-  <p id="id"></p>
-  <p id="time"></p>
+  <div id="outer">
+    <div id="content">
+      <h1>How Long Till...</h1>
+      <input type="text" placeholder="">
+      <button id="normal_button" type="button" onclick="getData()" >Random</button>
+      <div id="result">
+        <p id="title"></p>
+        <em><p id="tagline"></p></em>
+        <p id="id"></p>
+        <p id="runtime"></p>
+        <p id="time"></p>
+      </div>
+    </div>    
+  </div>
 </body>
 
 </html>
