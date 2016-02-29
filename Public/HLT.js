@@ -1,4 +1,11 @@
 
+window.myFirebaseRef = new Firebase("https://hlt.firebaseio.com/");
+
+myFirebaseRef.child("api_key").on("value", function(snapshot) {
+  swal("Api Key:", snapshot.val(), "success");  // Alerts "ApiKey: Value"
+  window.api_key = snapshot.val()
+});
+
 function mediaType(){
   var type = ["movie"] //, "tv"] adding TV soon
   var random = Math.floor(Math.random()*type.length);
@@ -6,27 +13,24 @@ function mediaType(){
 }
 
 function mediaId(){
-  if(media_type === "movie"){
-    window.ids = [501, 2, 3, 5, 6, 8, 9, 388, 280]
-  } else {
-    //var ids = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  window.media_id = Math.floor(Math.random()*100000) + 1
   }
-  var random = Math.floor(Math.random()*ids.length);
-  // window.media_id = ids[random]
-  window.media_id = Math.floor(Math.random()*10) + 1
-}
-
+      
 function howLongTill(){
   var diff = Math.abs(new Date() - new Date('2016/12/25 12:00'));
   window.timeTill = diff / 1000 / 60 
 }
 
-function getData() {
+function getData(){
   mediaType();
   mediaId();
-  howLongTill();
+  getMovieData() 
+}
+
+function makeRequest() {
+  console.log(media_id + " making request")
   var xhttp = new XMLHttpRequest();
-  xhttp.open("GET", "https://api.themoviedb.org/3/" + media_type + "/" + media_id + "?api_key=e8a58e66432e51a990d0ade02a4e6362", true);
+  xhttp.open("GET", "https://api.themoviedb.org/3/" + media_type + "/" + media_id + "?api_key=" + api_key, true);
 
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -44,13 +48,34 @@ function getData() {
         //TV Parsing
       } 
     } else if(xhttp.status == 404) {
+        pushDud();
         document.getElementById("id").innerHTML = ""
         document.getElementById("runtime").innerHTML = ""
         document.getElementById("title").innerHTML = ""
         document.getElementById("time").innerHTML = ""
         document.getElementById("tagline").innerHTML = ""
 
-      swal({   
+       
+      };
+    }
+  xhttp.send();
+}
+
+function getMovieData(){
+  var ref = new Firebase("https://hlt.firebaseio.com/duds/");
+  ref.orderByChild("bad_id").equalTo(media_id).on("value", function(snapshot) {
+    if (snapshot.val() === null || undefined || ""){
+      makeRequest();
+      howLongTill();
+    } else {
+      mediaId();
+      getMovieData();
+    }
+  });
+}
+
+function pushDud() {
+  swal({   
         title: "Congratulations!",   
         text: "You have won an arbitrary lottery.",   
         type: "input",
@@ -60,16 +85,22 @@ function getData() {
         animation: "slide-from-top",   
         inputPlaceholder: "What's your name?" }, 
       function(inputValue){   
+        window.userName = inputValue
         if (inputValue === false) return false;      
         if (inputValue === "") {     
           swal.showInputError("You need to write something!");     
           return false   }      
-          swal("Nice!", 
-            "You're a winner, " + inputValue, "success"); 
-      });
-    }
-  };
-  xhttp.send();
-}
+          swal("Spectacular Effort, " + inputValue , 
+            "If you want to know what just happened. Click Here.", "success"); 
 
+          var badIdsRef = myFirebaseRef.child("duds");
+
+          var newFinder = badIdsRef.push();
+          console.log(newFinder.key())
+          newFinder.set({
+            bad_id: media_id,
+            nickname: userName
+          });
+        }
+)}
 //firebase for Duds, "leaderboard" style retire bad Id's.
