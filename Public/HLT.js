@@ -2,7 +2,7 @@
 window.myFirebaseRef = new Firebase("https://hlt.firebaseio.com/");
 
 myFirebaseRef.child("api_key").on("value", function(snapshot) {
-  swal("Api Key:", snapshot.val(), "success");  // Alerts "ApiKey: Value"
+  document.getElementById('normal_button').style.display = "inline";
   window.api_key = snapshot.val()
 });
 
@@ -19,12 +19,6 @@ function mediaId(){
 function howLongTill(){
   var diff = Math.abs(new Date() - new Date('2016/12/25 12:00'));
   window.timeTill = diff / 1000 / 60 
-}
-
-function getData(){
-  mediaType();
-  mediaId();
-  getMovieData() 
 }
 
 function makeRequest() {
@@ -85,22 +79,25 @@ function pushDud() {
         animation: "slide-from-top",   
         inputPlaceholder: "What's your name?" }, 
       function(inputValue){   
-        window.userName = inputValue
         if (inputValue === false) return false;      
         if (inputValue === "") {     
           swal.showInputError("You need to write something!");     
           return false   }      
-          swal("Spectacular Effort, " + inputValue , 
-            "If you want to know what just happened. Click Here.", "success"); 
+          swal({title:"Spectacular Effort," + inputValue,
+                text:"If you want to know what just happened. <a href='http://www.google.com' target='_blank'>Click Here.</a>",
+                html: true}); 
 
-          var badIdsRef = myFirebaseRef.child("duds");
-
-          var newFinder = badIdsRef.push();
-          console.log(newFinder.key())
+          var dudsRef = myFirebaseRef.child("duds");
+          var newFinder = dudsRef.push();
           newFinder.set({
             bad_id: media_id,
-            nickname: userName
+            nickname: inputValue
           });
         }
 )}
-//firebase for Duds, "leaderboard" style retire bad Id's.
+
+function getData(){
+  mediaType();
+  mediaId();
+  getMovieData() 
+}

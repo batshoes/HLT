@@ -24,6 +24,7 @@
 #normal_button, input {
   font-family: 'Roboto Slab', serif;
   height: 2em;
+  display:none;
 }
 
 input {
