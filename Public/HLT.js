@@ -2,9 +2,6 @@ window.myFirebaseRef = new Firebase("https://hlt.firebaseio.com/");
 
 myFirebaseRef.child("api_key").on("value", function(snapshot) {
   document.getElementById('normal_button').style.display = "inline";
-  window.api_key = snapshot.val()
-});
-myFirebaseRef.child("api_key").on("value", function(snapshot) {
   document.getElementById('random_button').style.display = "inline";
   window.api_key = snapshot.val()
 });
@@ -58,6 +55,7 @@ function makeRequest() {
         document.getElementById("runtime").innerHTML = "Runtime: " + runtime + " mins"
         document.getElementById("title").innerHTML = "You got: " + title
         document.getElementById("time").innerHTML = "You would need to watch ' " + title + "' about " + Math.round(Math.round(timeTill) / runtime) + " times until " + pikADate + " came round."
+        document.getElementById("released").innerHTML = "Release Date: " + json['release_date']
         if (tagline.length > 10){
           document.getElementById("tagline").innerHTML = "'" + tagline + '"'
         } else {
@@ -73,6 +71,7 @@ function makeRequest() {
         document.getElementById("title").innerHTML = ""
         document.getElementById("time").innerHTML = ""
         document.getElementById("tagline").innerHTML = ""
+        document.getElementById("released").innerHTML = ""
    
       };
     }
@@ -124,6 +123,10 @@ function pushDud() {
 function searchMovies() {
   mediaType();
   mediaName();
+  if (media_name === ""){
+    swal("Hey", "You need to enter something", "error");
+    return
+  }
   document.getElementById('datepicker').style.display = "inline";
   document.getElementById('movieList').style.display = "inline";
   document.getElementById('titlepicker').style.display = "none";
