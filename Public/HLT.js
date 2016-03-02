@@ -29,6 +29,10 @@ function mediaId(){
   window.media_id = Math.floor(Math.random()*200000) + 1
 }
 
+function mediaSpecificId(){
+  window.media_id = document.getElementById('movieList').value
+}
+
 function mediaName(){
   window.media_name = document.getElementById('titlepicker').value
 }
@@ -158,5 +162,26 @@ function getRandomData(){
 
 function getSpecificData(){
   mediaType();
-  mediaName();
+  mediaSpecificId();
+  getMovieData();
+  document.getElementById('random_button').style.display = "inline";
+  document.getElementById('reset').style.display = "inline";
+
+}
+
+function resetDefaults(){
+  document.getElementById('specific_button').style.display = "none";
+  document.getElementById('datepicker').style.display = "none";
+  document.getElementById('movieList').style.display = "none";
+  
+  document.getElementById('titlepicker').style.display = "inline";
+  document.getElementById('normal_button').style.display = "inline";
+
+
+  document.getElementById('movieList').innerHTML = "";
+  document.getElementById('titlepicker').value = "";
+  document.getElementById('datepicker').innerHTML = "";
+
+
+  document.getElementById('reset').style.display = "none";
 }

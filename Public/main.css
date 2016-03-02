@@ -45,7 +45,7 @@ button {
   width: 300px;
   background-color: white;
 }
-#specific_button {
+#specific_button, #reset {
   display: none;
 }
 
