@@ -1,9 +1,14 @@
 * {
-  font-family: 'Roboto Slab', serif
+  font-family: 'Roboto Slab', serif;
+  color: black;
 }
 #outer {
   width: 100vw;
   height: 100vh;
+}
+
+h1 {
+  font-size: 40px;
 }
 
 #content {
@@ -16,21 +21,39 @@
   border-right: thin solid #99ff99;
 }
 
-#result {
+#result, #leaderboard, .explaination {
   margin: 0 auto;
   width: 70%;
 }
-
-#normal_button, input {
-  font-family: 'Roboto Slab', serif;
-  height: 2em;
-  display:none;
+.explaination {
+  text-align: justify
 }
 
-input {
-  width: 200px;
+#datepicker, #titlepicker, #movieList {
+width: 240px;
+font-size: 16px;
+background-color: white;
+}
+#datepicker, #movieList {
+  display: none;
+
 }
 
-#normal_button {
-  width: 75px;
+button {
+  font-size: 16px;
+  margin: 8px;
+  width: 300px;
+  background-color: white;
+}
+#specific_button, #reset {
+  display: none;
+}
+
+#footer {
+  text-align: right;
+  margin-right: 20px;
+}
+
+#footer a {
+ text-decoration: none;
 }
