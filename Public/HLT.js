@@ -1,10 +1,19 @@
-
 window.myFirebaseRef = new Firebase("https://hlt.firebaseio.com/");
 
 myFirebaseRef.child("api_key").on("value", function(snapshot) {
   document.getElementById('normal_button').style.display = "inline";
   window.api_key = snapshot.val()
 });
+
+var idRef = new Firebase("https://hlt.firebaseio.com/duds/");
+idRef.orderByChild('bad_id').on("value", function(snapshot) {
+  outerObject = snapshot.val()
+  theKeys = Object.keys(snapshot.val())
+  for (i = 0; i < theKeys.length - 1; i++){
+    document.getElementById('leaderboard').innerHTML += "Bad Id: " + outerObject[theKeys[i]]['bad_id'] + " Nickname: " + outerObject[theKeys[i]]['nickname'] + "<br><br>"
+  }
+  
+})
 
 function mediaType(){
   var type = ["movie"] //, "tv"] adding TV soon
@@ -13,7 +22,7 @@ function mediaType(){
 }
 
 function mediaId(){
-  window.media_id = Math.floor(Math.random()*100000) + 1
+  window.media_id = Math.floor(Math.random()*200000) + 1
   }
       
 function howLongTill(){
@@ -22,7 +31,6 @@ function howLongTill(){
 }
 
 function makeRequest() {
-  console.log(media_id + " making request")
   var xhttp = new XMLHttpRequest();
   xhttp.open("GET", "https://api.themoviedb.org/3/" + media_type + "/" + media_id + "?api_key=" + api_key, true);
 
@@ -33,11 +41,15 @@ function makeRequest() {
         window.runtime = json['runtime']
         window.tagline = json['tagline']
         window.title = json['title']
-        document.getElementById("id").innerHTML = "TMDb id: " + media_id
+        document.getElementById("id").innerHTML = "TMDb Id: " + media_id
         document.getElementById("runtime").innerHTML = "Runtime: " + runtime + " mins"
-        document.getElementById("title").innerHTML = "Title of film: " + title
-        document.getElementById("time").innerHTML = "Watch " + title + " about " + Math.round(Math.round(timeTill) / runtime) + " times till christmas."
-        document.getElementById("tagline").innerHTML = "'" + tagline + '"' || "Filmed in " + json['spoken_languages'][0]['name'] || "What the shit: " + xhttp.responseText
+        document.getElementById("title").innerHTML = "You got: " + title
+        document.getElementById("time").innerHTML = "You would need to watch ' " + title + "' about " + Math.round(Math.round(timeTill) / runtime) + " times until Christmas Day came round."
+        if (tagline.length > 10){
+          document.getElementById("tagline").innerHTML = "'" + tagline + '"'
+        } else {
+          document.getElementById("tagline").innerHTML =  "Filmed in " + json['spoken_languages'][0]['name'] || "What the shit: " + xhttp.responseText
+        }
       } else {
         //TV Parsing
       } 
@@ -82,18 +94,20 @@ function pushDud() {
         if (inputValue === false) return false;      
         if (inputValue === "") {     
           swal.showInputError("You need to write something!");     
-          return false   }      
-          swal({title:"Spectacular Effort," + inputValue,
-                text:"If you want to know what just happened. <a href='http://www.google.com' target='_blank'>Click Here.</a>",
-                html: true}); 
+          return false   
+        }      
+        swal({title:"Spectacular Effort, " + inputValue,
+              text:"If you want to know what just happened. <a href='./leaderboard.html' target='_blank'>Click Here.</a>",
+              html: true
+        }); 
 
-          var dudsRef = myFirebaseRef.child("duds");
-          var newFinder = dudsRef.push();
-          newFinder.set({
-            bad_id: media_id,
-            nickname: inputValue
-          });
-        }
+        var dudsRef = myFirebaseRef.child("duds");
+        var newFinder = dudsRef.push();
+        newFinder.set({
+          bad_id: media_id,
+          nickname: inputValue
+        });
+      }
 )}
 
 function getData(){

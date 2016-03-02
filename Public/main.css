@@ -1,9 +1,14 @@
 * {
-  font-family: 'Roboto Slab', serif
+  font-family: 'Roboto Slab', serif;
+  color: black;
 }
 #outer {
   width: 100vw;
   height: 100vh;
+}
+
+h1 {
+  font-size: 40px;
 }
 
 #content {
@@ -16,21 +21,28 @@
   border-right: thin solid #99ff99;
 }
 
-#result {
+#result, #leaderboard, .explaination {
   margin: 0 auto;
   width: 70%;
 }
+.explaination {
+  text-align: justify
+}
 
-#normal_button, input {
+#normal_button{
   font-family: 'Roboto Slab', serif;
-  height: 2em;
+  font-size: 16px;
+  width: 300px;
+  background-color: white;
   display:none;
 }
 
 input {
   width: 200px;
 }
-
-#normal_button {
-  width: 75px;
+#footer {
+  text-align: right;
+}
+#footer a {
+ text-decoration: none;
 }
