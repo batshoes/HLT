@@ -29,20 +29,31 @@ h1 {
   text-align: justify
 }
 
-#normal_button{
-  font-family: 'Roboto Slab', serif;
-  font-size: 16px;
-  width: 300px;
-  background-color: white;
-  display:none;
+#datepicker, #titlepicker, #movieList {
+width: 240px;
+font-size: 16px;
+background-color: white;
+}
+#datepicker, #movieList {
+  display: none;
+
 }
 
-input {
-  width: 200px;
+button {
+  font-size: 16px;
+  margin: 8px;
+  width: 300px;
+  background-color: white;
 }
+#specific_button {
+  display: none;
+}
+
 #footer {
   text-align: right;
+  margin-right: 20px;
 }
+
 #footer a {
  text-decoration: none;
 }

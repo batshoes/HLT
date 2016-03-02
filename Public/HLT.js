@@ -4,6 +4,10 @@ myFirebaseRef.child("api_key").on("value", function(snapshot) {
   document.getElementById('normal_button').style.display = "inline";
   window.api_key = snapshot.val()
 });
+myFirebaseRef.child("api_key").on("value", function(snapshot) {
+  document.getElementById('random_button').style.display = "inline";
+  window.api_key = snapshot.val()
+});
 
 var idRef = new Firebase("https://hlt.firebaseio.com/duds/");
 idRef.orderByChild('bad_id').on("value", function(snapshot) {
@@ -23,10 +27,15 @@ function mediaType(){
 
 function mediaId(){
   window.media_id = Math.floor(Math.random()*200000) + 1
-  }
+}
+
+function mediaName(){
+  window.media_name = document.getElementById('titlepicker').value
+}
       
 function howLongTill(){
-  var diff = Math.abs(new Date() - new Date('2016/12/25 12:00'));
+  window.pikADate = document.getElementById('datepicker').value || '2016/12/25'
+  var diff = Math.abs(new Date() - new Date(pikADate));
   window.timeTill = diff / 1000 / 60 
 }
 
@@ -44,7 +53,7 @@ function makeRequest() {
         document.getElementById("id").innerHTML = "TMDb Id: " + media_id
         document.getElementById("runtime").innerHTML = "Runtime: " + runtime + " mins"
         document.getElementById("title").innerHTML = "You got: " + title
-        document.getElementById("time").innerHTML = "You would need to watch ' " + title + "' about " + Math.round(Math.round(timeTill) / runtime) + " times until Christmas Day came round."
+        document.getElementById("time").innerHTML = "You would need to watch ' " + title + "' about " + Math.round(Math.round(timeTill) / runtime) + " times until " + pikADate + " came round."
         if (tagline.length > 10){
           document.getElementById("tagline").innerHTML = "'" + tagline + '"'
         } else {
@@ -60,8 +69,7 @@ function makeRequest() {
         document.getElementById("title").innerHTML = ""
         document.getElementById("time").innerHTML = ""
         document.getElementById("tagline").innerHTML = ""
-
-       
+   
       };
     }
   xhttp.send();
@@ -109,9 +117,46 @@ function pushDud() {
         });
       }
 )}
+function searchMovies() {
+  mediaType();
+  mediaName();
+  document.getElementById('datepicker').style.display = "inline";
+  document.getElementById('movieList').style.display = "inline";
+  document.getElementById('titlepicker').style.display = "none";
+  document.getElementById('normal_button').style.display = "none";
+  document.getElementById('random_button').style.display = "none";
+  document.getElementById('movieList').innerHTML = ""
+  document.getElementById("datepicker")
+    .addEventListener("change",
+                      document.getElementById('specific_button')
+                        .style
+                          .display = "inline");
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET", "https://api.themoviedb.org/3/search/" + media_type + "?api_key=" + api_key +"&query='" + media_name, true);
 
-function getData(){
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      window.json = JSON.parse(xhttp.responseText);
+      var sel = document.getElementById('movieList');
+
+      for(var i = 0; i < json['results'].length; i++) {
+        var opt = document.createElement('option');
+        opt.innerHTML = json['results'][i]['title'];
+        opt.value = json['results'][i]['id'];
+        sel.appendChild(opt);
+      }
+    }
+  }
+xhttp.send();
+}
+
+function getRandomData(){
   mediaType();
   mediaId();
   getMovieData() 
+}
+
+function getSpecificData(){
+  mediaType();
+  mediaName();
 }
