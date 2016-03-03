@@ -31,13 +31,24 @@ function mediaSpecificId(){
   window.media_id = document.getElementById('movieList').value
 }
 
+function randomDate(){
+
+   var startDate = new Date().getTime();
+   var endDate =  new Date(2100,0,1).getTime();
+   var spaces = (endDate - startDate);
+   var timestamp = Math.round(Math.random() * spaces);
+   timestamp += startDate;
+   return new Date(timestamp);
+
+}
+
 function mediaName(){
   window.media_name = document.getElementById('titlepicker').value
 }
       
 function howLongTill(){
-  window.pikADate = document.getElementById('datepicker').value || '2016/12/25'
-  var diff = Math.abs(new Date() - new Date(pikADate));
+  window.pikADate = document.getElementById('datepicker').value || randomDate();
+  var diff = Math.abs(new Date().getTime() - new Date(pikADate).getTime());
   window.timeTill = diff / 1000 / 60 
 }
 
