@@ -54,7 +54,7 @@ function makeRequest() {
         document.getElementById("id").innerHTML = "TMDb Id: " + media_id
         document.getElementById("runtime").innerHTML = "Runtime: " + runtime + " mins"
         document.getElementById("title").innerHTML = "You got: " + title
-        document.getElementById("time").innerHTML = "You would need to watch ' " + title + "' about " + Math.round(Math.round(timeTill) / runtime) + " times until " + pikADate + " came round."
+        document.getElementById("time").innerHTML = "You would need to watch '" + title + "' about " + Math.round(Math.round(timeTill) / runtime) + " times until " + pikADate + " came round."
         document.getElementById("released").innerHTML = "Release Date: " + json['release_date']
         if (tagline.length > 10){
           document.getElementById("tagline").innerHTML = "'" + tagline + '"'
