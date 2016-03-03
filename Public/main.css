@@ -14,7 +14,7 @@ h1 {
 #content {
   width: 70%;
   height: 100%;
-  padding-top: 10%;
+  padding-top: 5%;
   margin: 0 auto;
   text-align: center;
   border-left: thin solid #99ff99;
@@ -52,7 +52,7 @@ button {
 #footer {
   text-align: right;
   margin-right: 20px;
-  margin-top: 45px;
+  margin-top: 15%;
 }
 
 #footer a {
