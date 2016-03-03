@@ -10,7 +10,7 @@ var idRef = new Firebase("https://hlt.firebaseio.com/duds/");
 idRef.orderByChild('bad_id').on("value", function(snapshot) {
   outerObject = snapshot.val()
   theKeys = Object.keys(snapshot.val())
-  for (i = 0; i < theKeys.length - 1; i++){
+  for (i = 0; i < theKeys.length; i++){
     document.getElementById('leaderboard').innerHTML += "Bad Id: " + outerObject[theKeys[i]]['bad_id'] + " Nickname: " + outerObject[theKeys[i]]['nickname'] + "<br><br>"
   }
   
@@ -108,7 +108,7 @@ function pushDud() {
           return false   
         }      
         swal({title:"Spectacular Effort, " + inputValue,
-              text:"If you want to know what just happened. <a href='./leaderboard.html' target='_blank'>Click Here.</a>",
+              text:"If you want to know what just happened. <a href='./leaderboard' target='_blank'>Click Here.</a>",
               html: true
         }); 
 
