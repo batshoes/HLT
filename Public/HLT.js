@@ -16,6 +16,7 @@ idRef.orderByChild('bad_id').on("value", function(snapshot) {
   
 })
 
+
 function mediaType(){
   var type = ["movie"] //, "tv"] adding TV soon
   var random = Math.floor(Math.random()*type.length);
@@ -144,13 +145,25 @@ function searchMovies() {
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
       window.json = JSON.parse(xhttp.responseText);
-      var sel = document.getElementById('movieList');
+      if (json['total_results'] > 0){
+        var sel = document.getElementById('movieList');
 
-      for(var i = 0; i < json['results'].length; i++) {
-        var opt = document.createElement('option');
-        opt.innerHTML = json['results'][i]['title'];
-        opt.value = json['results'][i]['id'];
-        sel.appendChild(opt);
+        for(var i = 0; i < json['results'].length; i++) {
+          var opt = document.createElement('option');
+          opt.innerHTML = json['results'][i]['title'];
+          opt.value = json['results'][i]['id'];
+          sel.appendChild(opt);
+        }
+      } else {
+        swal(media_name + ". Really?", "That movie just don exist", "error");
+          document.getElementById('datepicker').style.display = "none";
+          document.getElementById('movieList').style.display = "none";
+          document.getElementById('specific_button').style.display = "none";
+          document.getElementById('titlepicker').style.display = "inline";
+          document.getElementById('normal_button').style.display = "inline";
+          document.getElementById('random_button').style.display = "inline";
+          document.getElementById('titlepicker').value = ""
+        return
       }
     }
   }
