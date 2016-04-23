@@ -2,6 +2,7 @@
   font-family: 'Roboto Slab', serif;
   color: black;
 }
+
 #outer {
   width: 100vw;
   height: 100vh;
@@ -25,15 +26,17 @@ h1 {
   margin: 0 auto;
   width: 70%;
 }
+
 .explaination {
   text-align: justify
 }
 
 #datepicker, #titlepicker, #movieList {
-width: 240px;
-font-size: 16px;
-background-color: white;
+  width: 240px;
+  font-size: 16px;
+  background-color: white;
 }
+
 #datepicker, #movieList {
   display: none;
 
@@ -45,6 +48,7 @@ button {
   width: 300px;
   background-color: white;
 }
+
 #specific_button, #reset {
   display: none;
 }
