@@ -78,13 +78,7 @@ function makeRequest() {
       } 
     } else if(xhttp.status == 404) {
         pushDud();
-        document.getElementById("id").innerHTML = ""
-        document.getElementById("runtime").innerHTML = ""
-        document.getElementById("title").innerHTML = ""
-        document.getElementById("time").innerHTML = ""
-        document.getElementById("tagline").innerHTML = ""
-        document.getElementById("released").innerHTML = ""
-   
+        document.getElementsByClassName("results").innerHTML = ""
       };
     }
   xhttp.send();
@@ -132,6 +126,7 @@ function pushDud() {
         });
       }
 )}
+
 function searchMovies() {
   mediaType();
   mediaName();
