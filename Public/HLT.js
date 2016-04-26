@@ -60,14 +60,17 @@ function makeRequest() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
       json = JSON.parse(xhttp.responseText);
       if(media_type === "movie"){
-        window.runtime = json['runtime']
-        window.tagline = json['tagline']
-        window.title = json['title']
+        runtime = json['runtime']
+        tagline = json['tagline']
+        title = json['title']
+        posterPath = json['poster_path']
+        console.log(json)
         document.getElementById("id").innerHTML = "TMDb Id: " + media_id
         document.getElementById("runtime").innerHTML = "Runtime: " + runtime + " mins"
         document.getElementById("title").innerHTML = "You got: " + title
         document.getElementById("time").innerHTML = "You would need to watch '" + title + "' about " + Math.round(Math.round(timeTill) / runtime) + " times until " + pikADate + " came round."
         document.getElementById("released").innerHTML = "Release Date: " + json['release_date']
+        getPoster(json['poster_path'])
         if (tagline.length > 10){
           document.getElementById("tagline").innerHTML = "'" + tagline + '"'
         } else {
@@ -82,6 +85,14 @@ function makeRequest() {
       };
     }
   xhttp.send();
+}
+
+function getPoster(image){
+  if (image === null || undefined || ""){
+    document.getElementById("poster").src = "https://assets.tmdb.org/assets/d26cc86b42bf5e23f4a2657fbb8e2600/images/no-poster-w370-v2.png"
+  } else {
+    document.getElementById("poster").src = "http://image.tmdb.org/t/p/w185" + posterPath
+  }
 }
 
 function getMovieData(){
